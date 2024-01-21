@@ -3,12 +3,11 @@ require 'rails_helper'
 describe User do
   let(:nickname) { 'テスト太郎' }
   let(:email) { 'test@example.com' }
-  let(:password) { '12345678' }
-  let(:user) { User.new(nickname:, email:, password:, password_confirmation: password) }
+  let(:user) { User.new(nickname: nickname, email: email, password: password, password_confirmation: password) } # 変数に格納
 
   describe '.first' do
     before do
-      create(:user, nickname:, email:)
+      create(:user, nickname: nickname, email: email)
     end
 
     subject { described_class.first }
@@ -20,8 +19,10 @@ describe User do
   end
 
   describe 'validation' do
+    let(:password) { '12345678' }
+
     describe 'nickname属性' do
-      describe '正常系' do
+      describe '文字数制限の検証' do
         context 'nicknameが20文字以下の場合' do
           let(:nickname) { 'あいうえおかきくけこさしすせそたちつてと' } # 20文字
 
@@ -30,23 +31,25 @@ describe User do
           end
         end
 
-        describe '異常系' do
-          context 'nicknameが20文字を超える場合' do
-            let(:nickname) { 'あいうえおかきくけこさしすせそたちつてとな' } # 21文字
+        context 'nicknameが20文字を超える場合' do
+          let(:nickname) { 'あいうえおかきくけこさしすせそたちつてとな' } # 21文字
 
-            it 'User オブジェクトは無効である' do
-              user.valid?
+          it 'User オブジェクトは無効である' do
+            user.valid?
 
-              expect(user.valid?).to be(false)
-              expect(user.errors[:nickname]).to include('is too long (maximum is 20 characters)')
-            end
+            expect(user.valid?).to be(false)
+            expect(user.errors[:nickname]).to include('は20文字以下に設定して下さい。')
           end
-          context 'nicknameが空欄の場合' do
-            let(:nickname) { '' }
-            it 'User オブジェクトは有効である' do
-              expect(user.valid?).to be(false)
-              expect(user.errors[:nickname]).to include("can't be blank")
-            end
+        end
+      end
+
+      describe '存在性の検証' do
+        context 'nicknameが空欄の場合' do
+          let(:nickname) { '' }
+
+          it 'User オブジェクトは無効である' do
+            expect(user.valid?).to be(false)
+            expect(user.errors[:nickname]).to include("が入力されていません。")
           end
         end
       end
