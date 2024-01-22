@@ -3,11 +3,11 @@ require 'rails_helper'
 describe User do
   let(:nickname) { 'テスト太郎' }
   let(:email) { 'test@example.com' }
-  let(:user) { User.new(nickname: nickname, email: email, password: password, password_confirmation: password) } # 変数に格納
+  let(:user) { User.new(nickname:, email:, password:, password_confirmation: password) } # 変数に格納
 
   describe '.first' do
     before do
-      create(:user, nickname: nickname, email: email)
+      create(:user, nickname:, email:)
     end
 
     subject { described_class.first }
@@ -49,7 +49,7 @@ describe User do
 
           it 'User オブジェクトは無効である' do
             expect(user.valid?).to be(false)
-            expect(user.errors[:nickname]).to include("が入力されていません。")
+            expect(user.errors[:nickname]).to include('が入力されていません。')
           end
         end
       end

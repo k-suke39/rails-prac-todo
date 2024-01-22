@@ -107,7 +107,7 @@ describe 'User', type: :system do
 
   describe 'ログイン機能の検証' do
     before do
-      create(:user, nickname: nickname, email: email, password: password, password_confirmation: password) # ユーザー作成
+      create(:user, nickname:, email:, password:, password_confirmation: password) # ユーザー作成
 
       visit '/users/sign_in'
       fill_in 'user_email', with: email
@@ -139,7 +139,7 @@ describe 'User', type: :system do
 
   describe 'ログアウト機能の検証' do
     before do
-      user = create(:user, nickname: nickname, email: email, password: password, password_confirmation: password) # ユーザー作成
+      user = create(:user, nickname:, email:, password:, password_confirmation: password) # ユーザー作成
       sign_in user # 作成したユーザーでログイン
       visit '/'
       click_button 'ログアウト'
