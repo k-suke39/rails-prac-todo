@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Home', type: :system do
   before do
-    driven_by :selenium_chrome_headless
+    driven_by(:rack_test)
   end
 
   describe 'トップページアクセスの検証' do
@@ -27,6 +27,10 @@ RSpec.describe 'Home', type: :system do
 
       it 'ログインリンクは表示しない' do
         expect(page).not_to have_link('ログイン', href: '/users/sign_in')
+      end
+
+      it 'ログ投稿リンクを表示する' do
+        expect(page).to have_link('ログ投稿', href: '/posts/new')
       end
 
       it 'ログアウトリンクを表示する' do

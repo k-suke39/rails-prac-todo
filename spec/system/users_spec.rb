@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'User', type: :system do
-  before { driven_by :selenium_chrome_headless }
+  before { driven_by(:rack_test) }
 
   # ユーザー情報入力用の変数
   let(:email) { 'test@example.com' }
@@ -96,7 +96,7 @@ describe 'User', type: :system do
       end
 
       context 'passwordとpassword_confirmationが一致しない場合' do
-        let(:password_confirmation) { "#{password}hoge" } # passwordに"hoge"を足した文字列にする
+        let(:password_confirmation) { 'hoge' } # passwordに"hoge"を足した文字列にする
         it 'ユーザーを作成せず、エラーメッセージを表示する' do
           expect { subject }.not_to change(User, :count)
           expect(page).to have_content('確認用パスワード が一致していません。')

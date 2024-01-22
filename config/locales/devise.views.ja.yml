@@ -17,7 +17,8 @@ ja:
               too_long: "は%{count}文字以下に設定して下さい。"
               invalid: "は有効でありません。"
             password_confirmation:
-        post: # ここから追加
+              confirmation: "が一致していません。"
+        post:
           attributes:
             title:
               blank: "が入力されていません。"
