@@ -12,7 +12,7 @@ describe Post do
     let(:post) { build(:post, title:, content:, user_id:) }
     # 【条件】
     context '正常系' do
-      # 【条件ごとの必要なデータ】   
+      # 【条件ごとの必要なデータ】
       # 【期待する結果】
       it '有効である' do
         expect(post.valid?).to be(true)
